@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tupi Mirim — Aprenda Tupi Brincando</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tupi.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <div class="screen active" id="s-login">
+        <div class="login d-flex align-items-center justify-content-center p-3">
+            <div class="card lcard w-100 bg-white p-4 p-md-5 text-center shadow">
+                <div class="display-3" aria-hidden="true">
+                    <img src="img/onçaPNG.png" alt="Tupi Mirim" style="width:150px">
+                </div>
+                <h1 class="display-6"><span class="hl">Tupi</span> <span class="hl y">Mirim</span></h1>
+                <p>Aprenda a língua Tupi brincando!</p>
+                <div id="err" class="alert alert-danger text-start fw-bold d-none" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> <span
+                        id="errt"></span></div>
+                <div class="text-start mb-3"><label for="u" class="form-label fw-bold" style="color:var(--navy)"><i
+                            class="bi bi-person-fill"></i>
+                        Usuário</label><input id="u" class="form-control" placeholder="ex: kurumim"
+                        autocomplete="username"></div>
+                <div class="text-start mb-4"><label for="p" class="form-label fw-bold" style="color:var(--navy)"><i
+                            class="bi bi-key-fill"></i>
+                        Senha</label><input id="p" type="password" class="form-control" placeholder="••••••"
+                        autocomplete="current-password"></div>
+                <button class="btn btn-tm-y w-100" onclick="login()">Entrar <i class="bi bi-rocket-takeoff-fill"></i></button>
+                <small class="mt-3">Dica: <b>kurumim</b> / <b>tupi123</b></small>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="screen" id="s-app">
+        <nav class="navbar navbar-expand-lg bg-white sticky-top">
+            <div class="container">
+                <a class="navbar-brand logo d-flex align-items-center gap-2" href="#"
+                    onclick="go('dash');return false"><span style="font-size:2.2rem">  <img src="img/onçaPNG.png" alt="Tupi Mirim" style="width:100px"></span><span>Tupi<small>MIRIM ·
+                            LÍNGUA DO AMAZONAS</small></span></a>
+                <button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#mnav"
+                    aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mnav">
+                    <ul class="navbar-nav mx-auto gap-1">
+                        <li class="nav-item"><a class="nav-link active" id="m-dash" href="#"
+                                onclick="go('dash');return false">Início</a></li>
+                        <li class="nav-item"><a class="nav-link" id="m-profile" href="#"
+                                onclick="go('profile');return false">Meu Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" id="m-lessons" href="#"
+                                onclick="go('lessons');return false">Lições</a></li>
+                        <li class="nav-item"><a class="nav-link" id="m-games" href="#"
+                                onclick="go('games');return false">Jogos</a></li>
+                    </ul>
+                    <div class="d-flex gap-2">
+                        <button class="circ" aria-label="Ouvir a página"
+                            onclick="speak('Bem-vindo ao Tupi Mirim')"><span><i class="bi bi-volume-up-fill"></i></span></button>
+                        <button class="circ p" aria-label="Sair" onclick="logout()"><span><i class="bi bi-box-arrow-right"></i></span></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- PAINEL -->
+        <div id="v-dash">
+            <div class="hero">
+                <div class="container">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-7">
+                            <span class="tagl mb-3">BEM-VINDO AO TUPI MIRIM!</span>
+                            <h1 class="display-4">Olá, <span id="nm">Kurumim</span>!<br>Vamos <span
+                                    class="hl">brincar</span> de Tupi?</h1>
+                            <p class="fs-5 my-3">Todos os dias aprendemos palavras dos povos originários do Amazonas, no
+                                seu ritmo.</p>
+                            <button class="btn btn-tm-y btn-lg" onclick="openLesson(1)">Continuar lição</button>
+                        </div>
+                        <div class="col-lg-5 text-center heroart" aria-hidden="true">
+                            <img src="img/ave1.png" alt="Tupi Mirim" class="img-fluid" width="200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="container">
+                    <div class="row row-cols-2 row-cols-md-4 g-3">
+                        <div class="col"><b id="pts">240</b><span>Pontos</span></div>
+                        <div class="col"><b>7</b><span>Dias seguidos</span></div>
+                        <div class="col"><b>12</b><span>Palavras aprendidas</span></div>
+                        <div class="col"><b>3</b><span>Medalhas</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="container py-5">
+                <h2 class="text-center display-6 mb-4">Escolha sua <span class="hl">lição</span></h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4" id="dashLessons"></div>
+            </section>
+
+            <div class="yband">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-3 g-3">
+                        <div class="col">
+                            <div class="feat d-flex gap-3 align-items-center p-3"><span class="ck"><i class="bi bi-check-lg"></i></span>
+                                <div>
+                                    <h5 class="mb-0">Para todos</h5><small>Letras grandes e alto contraste</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feat d-flex gap-3 align-items-center p-3"><span class="ck"><i class="bi bi-check-lg"></i></span>
+                                <div>
+                                    <h5 class="mb-0">Ouvir e falar</h5><small>Botão de som em cada palavra</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feat d-flex gap-3 align-items-center p-3"><span class="ck"><i class="bi bi-check-lg"></i></span>
+                                <div>
+                                    <h5 class="mb-0">Cultura viva</h5><small>O Tupi no nosso dia a dia</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="container py-5">
+                <h2 class="text-center display-6 mb-4">Meu <span class="hl y">vocabulário</span></h2>
+                <div class="card cardx p-3">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Tupi</th>
+                                    <th>Português</th>
+                                    <th>Categoria</th>
+                                    <th>Status</th>
+                                    <th>Som</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="w">Y</td>
+                                    <td>Água</td>
+                                    <td><span class="badge tm-b">Natureza</span></td>
+                                    <td><span class="badge tm-g">Dominada</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Y','água')"
+                                            aria-label="Ouvir Y"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="w">Ka’a</td>
+                                    <td>Floresta</td>
+                                    <td><span class="badge tm-b">Natureza</span></td>
+                                    <td><span class="badge tm-g">Dominada</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Ka’a','floresta')"
+                                            aria-label="Ouvir Ka’a"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="w">Pirá</td>
+                                    <td>Peixe</td>
+                                    <td><span class="badge tm-y">Animais</span></td>
+                                    <td><span class="badge tm-y">Aprendendo</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Pirá','peixe')"
+                                            aria-label="Ouvir Pirá"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="w">Kwarahy</td>
+                                    <td>Sol</td>
+                                    <td><span class="badge tm-p">Céu</span></td>
+                                    <td><span class="badge tm-y">Aprendendo</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Kwarahy','sol')"
+                                            aria-label="Ouvir Kwarahy"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="w">Yasy</td>
+                                    <td>Lua</td>
+                                    <td><span class="badge tm-p">Céu</span></td>
+                                    <td><span class="badge tm-p">Nova</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Yasy','lua')"
+                                            aria-label="Ouvir Yasy"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="w">Amana</td>
+                                    <td>Chuva</td>
+                                    <td><span class="badge tm-p">Céu</span></td>
+                                    <td><span class="badge tm-p">Nova</span></td>
+                                    <td><button class="btn btn-tm-b btn-sm" onclick="say('Amana','chuva')"
+                                            aria-label="Ouvir Amana"><i class="bi bi-volume-up-fill"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h2 class="text-center display-6 my-4">Ranking da <span class="hl">turma Arara</span></h2>
+                <div class="card cardx y p-3">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Aluno</th>
+                                    <th>Pontos</th>
+                                    <th>Nível</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="bi bi-trophy-fill" style="color:#FFC107" aria-label="1º lugar"></i></td>
+                                    <td class="w">Kurumim</td>
+                                    <td>240</td>
+                                    <td><span class="badge tm-g">Explorador</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-trophy-fill" style="color:#9AA0A6" aria-label="2º lugar"></i></td>
+                                    <td>Yara</td>
+                                    <td>215</td>
+                                    <td><span class="badge tm-b">Explorador</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-trophy-fill" style="color:#CD7F32" aria-label="3º lugar"></i></td>
+                                    <td>Irapuã</td>
+                                    <td>198</td>
+                                    <td><span class="badge tm-b">Explorador</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Potyra</td>
+                                    <td>170</td>
+                                    <td><span class="badge tm-y">Aprendiz</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Ubirajara</td>
+                                    <td>145</td>
+                                    <td><span class="badge tm-y">Aprendiz</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PERFIL -->
+        <div id="v-profile" class="d-none">
+            <section class="container py-5">
+                <div class="card cardx p-4">
+                    <div class="d-flex flex-wrap gap-4 align-items-center">
+                        <div class="big" aria-hidden="true"><i class="bi bi-person-circle"></i></div>
+                        <div>
+                            <h2>Kurumim</h2>
+                            <p class="mb-0">Nível 3 · Explorador · 240 pontos</p>
+                            <p class="mb-0"><i class="bi bi-envelope-fill"></i> kurumim@tupimirim.com</p>
+                        </div>
+                    </div>
+                    <div class="progress mt-4" style="height:14px" role="progressbar" aria-valuenow="60"
+                        aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width:60%;background:var(--blue)"></div>
+                    </div>
+                    <p class="fw-bold mt-2 mb-0">60% para o Nível 4 — faltam 160 pontos</p>
+                </div>
+
+                <h2 class="text-center display-6 my-4"><span class="hl y">Conquistas</span></h2>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <div class="medal"><b><i class="bi bi-chat-quote-fill"></i></b>Primeira palavra</div>
+                    <div class="medal"><b><i class="bi bi-fire"></i></b>7 dias seguidos</div>
+                    <div class="medal"><b><i class="bi bi-water"></i></b>Amigo dos peixes</div>
+                    <div class="medal lock"><b><i class="bi bi-tree-fill"></i></b>Guardião da mata</div>
+                    <div class="medal lock"><b><i class="bi bi-trophy-fill"></i></b>Campeão Tupi</div>
+                </div>
+
+                <h2 class="text-center display-6 my-4"><span class="hl">Acessibilidade</span></h2>
+                <div class="card cardx y p-4">
+                    <div
+                        class="form-check form-switch d-flex justify-content-between align-items-center ps-0 py-3 border-bottom">
+                        <label class="form-check-label" for="sw1"><strong style="color:var(--navy)"><i
+                                    class="bi bi-volume-up-fill"></i> Sons e
+                                pronúncia</strong><br>Ouvir as palavras em Tupi</label><input
+                            class="form-check-input ms-3" type="checkbox" role="switch" id="sw1" checked
+                            onchange="soundOn=this.checked;if(!soundOn&&window.speechSynthesis)speechSynthesis.cancel()">
+                    </div>
+                    <div
+                        class="form-check form-switch d-flex justify-content-between align-items-center ps-0 py-3 border-bottom">
+                        <label class="form-check-label" for="sw2"><strong style="color:var(--navy)"><i
+                                    class="bi bi-palette-fill"></i> Alto
+                                contraste</strong><br>Cores fortes para facilitar a leitura</label><input
+                            class="form-check-input ms-3" type="checkbox" role="switch" id="sw2"
+                            onchange="document.body.classList.toggle('contrast',this.checked)"></div>
+                    <div
+                        class="form-check form-switch d-flex justify-content-between align-items-center ps-0 py-3 border-bottom">
+                        <label class="form-check-label" for="sw3"><strong style="color:var(--navy)"><i
+                                    class="bi bi-fonts"></i> Letras
+                                maiores</strong><br>Aumenta o tamanho do texto</label><input
+                            class="form-check-input ms-3" type="checkbox" role="switch" id="sw3"
+                            onchange="document.documentElement.style.setProperty('--fs',this.checked?'20px':'16px')">
+                    </div>
+                    <div class="form-check form-switch d-flex justify-content-between align-items-center ps-0 py-3">
+                        <label class="form-check-label" for="sw4"><strong style="color:var(--navy)"><i
+                                    class="bi bi-calendar-check-fill"></i> Lembretes
+                                diários</strong><br>Aviso para praticar todo dia</label><input
+                            class="form-check-input ms-3" type="checkbox" role="switch" id="sw4" checked></div>
+                </div>
+
+                <div class="d-grid gap-3 mx-auto mt-5" style="max-width:420px">
+                    <button class="btn btn-tm-p" onclick="toast('Senha alterada!')">Alterar senha</button>
+                    <button class="btn btn-tm-g" onclick="logout()">Sair da conta</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- LIÇÕES -->
+        <div id="v-lessons" class="d-none">
+            <section class="container py-5">
+                <h2 class="text-center display-6 mb-2">Minhas <span class="hl">lições</span></h2>
+                <p class="text-center mb-4">Escolha uma lição e aprenda com cartões que viram!</p>
+                <div class="row row-cols-1 row-cols-md-3 g-4" id="lessonGrid"></div>
+            </section>
+        </div>
+
+        <!-- JOGOS -->
+        <div id="v-games" class="d-none">
+            <section class="container py-5">
+                <h2 class="text-center display-6 mb-2">Hora de <span class="hl y">jogar</span></h2>
+                <p class="text-center mb-4">Jogue e ganhe pontos!</p>
+                <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+                    <div class="col">
+                        <div class="card pcard c-pink p-4 h-100" tabindex="0"
+                            onkeydown="if(event.key==='Enter')this.click()" onclick="startMemory()">
+                            <div class="display-3"><i class="bi bi-puzzle-fill"></i></div>
+                            <h3>Jogo da Memória</h3>
+                            <p>Junte a palavra em Tupi com o português</p><span
+                                class="btn btn-light mx-auto">Jogar</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card pcard c-blue p-4 h-100" tabindex="0"
+                            onkeydown="if(event.key==='Enter')this.click()" onclick="startQuiz()">
+                            <div class="display-3"><i class="bi bi-question-circle-fill"></i></div>
+                            <h3>Quiz do Tupi</h3>
+                            <p>Responda 5 perguntas e acerte o significado</p><span
+                                class="btn btn-light mx-auto">Jogar</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="gameArea" class="card cardx p-4 d-none" aria-live="polite"></div>
+            </section>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <h4>Tupi Mirim <i class="bi bi-tree-fill"></i></h4>
+                        <p>Ensinar a língua Tupi às crianças de forma leve, divertida e para todas e todos.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Contato</h4>
+                        <p><i class="bi bi-geo-alt-fill"></i> Manaus, Amazonas<br><i class="bi bi-envelope-fill"></i> ola@tupimirim.com</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Horários</h4>
+                        <div class="hours">Seg – Sex · 8h – 19h<br>Sábado · 9h – 16h<br>Domingo · Fechado</div>
+                    </div>
+                </div>
+                <p class="text-center mt-4 mb-0 small">© 2026 Tupi Mirim · Todos os direitos reservados</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal da lição -->
+    <div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lmTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:32px;border:3px dashed var(--pink)">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title" id="lmTitle"></h4><button class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="progress mb-4" style="height:10px">
+                        <div class="progress-bar" id="lmBar" style="background:var(--blue)"></div>
+                    </div>
+                    <div class="flash" id="flash" tabindex="0" role="button" onclick="flip()"
+                        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flip()}">
+                        <div class="display-1" id="fEmoji"></div>
+                        <div class="display-4 fw-bold" style="color:var(--navy)" id="fText"></div><small
+                            id="fHint"></small>
+                    </div>
+                    <button class="btn btn-tm-b mt-3" onclick="speakCard()"><i class="bi bi-volume-up-fill"></i> Ouvir</button>
+                </div>
+                <div class="modal-footer border-0 justify-content-between"><button class="btn btn-tm-g" id="prevB"
+                        onclick="step(-1)"><i class="bi bi-arrow-left"></i> Voltar</button><button class="btn btn-tm-y" id="nextB"
+                        onclick="step(1)">Próxima <i class="bi bi-arrow-right"></i></button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Bootstrap -->
+    <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+        <div id="toast" class="toast text-bg-dark rounded-pill" role="status" aria-live="polite">
+            <div class="toast-body fw-bold text-center px-4" id="toastmsg"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="tupi.js"></script>
+</body>
+
+</html>
